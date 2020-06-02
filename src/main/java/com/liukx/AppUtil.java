@@ -261,10 +261,26 @@ public class AppUtil {
      * @date 2020/6/1 0001
      */
     public static Predicate toAndEqualPredicate(Predicate predicate, Root root, CriteriaBuilder cb, Object obj, String... ignoreProperties){
-        final BeanWrapper src = new BeanWrapperImpl(obj);
-
         List<String> ignoreList =  ArrayUtils.isEmpty(ignoreProperties) ?new ArrayList<>():Arrays.asList(ignoreProperties);
 
+        //使用map实现
+        JSONObject j = (JSONObject)JSON.toJSON(obj);
+        for (Map.Entry<String, Object> entry : j.entrySet()) {
+            String name = entry.getKey();
+            Object value = entry.getValue();
+            if (value == null || value.toString().length() == 0 || ignoreList.contains(name) ){
+                continue;
+            }
+            if(value instanceof Collection){
+                predicate = cb.and(predicate, root.get(name).in((Collection)value));
+            }else{
+                predicate = cb.and(predicate, cb.equal(root.get(name), value));
+            }
+            //还可以根据实际业务,添加布尔类型的判断...
+        }
+        //使用map实现
+
+        final BeanWrapper src = new BeanWrapperImpl(obj);
         PropertyDescriptor[] pds = src.getPropertyDescriptors();
         for(PropertyDescriptor pd : pds) {
             String name = pd.getName();
