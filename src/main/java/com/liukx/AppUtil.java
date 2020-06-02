@@ -267,11 +267,16 @@ public class AppUtil {
 
         PropertyDescriptor[] pds = src.getPropertyDescriptors();
         for(PropertyDescriptor pd : pds) {
-            Object srcValue = src.getPropertyValue(pd.getName());
-            if (srcValue == null || ignoreList.contains(pd.getName()) || srcValue.toString().length() == 0){
+            String name = pd.getName();
+            Object srcValue = src.getPropertyValue(name);
+            if (srcValue == null || srcValue.toString().length() == 0 || ignoreList.contains(name) ){
                 continue;
             }
-            predicate = cb.and(predicate, cb.equal(root.get(pd.getName()), srcValue));
+            if(srcValue instanceof Collection){
+                predicate = cb.and(predicate, root.get(name).in((Collection)srcValue));
+            }else{
+                predicate = cb.and(predicate, cb.equal(root.get(name), srcValue));
+            }
         }
         return predicate;
     }
