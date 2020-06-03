@@ -297,4 +297,29 @@ public class AppUtil {
         return predicate;
     }
 
+    /**
+     * @description 枚举类转换为json对象
+     * @author liukx
+     * @date 2020/6/3 0003
+     */
+    public static JSONObject convertEnumToJson(Enum anEnum){
+        JSONObject json = new JSONObject();
+        if(anEnum == null){
+            return json;
+        }
+
+        json.put("enumName",anEnum.name());
+
+        BeanWrapper src = new BeanWrapperImpl(anEnum);
+        PropertyDescriptor[] pds = src.getPropertyDescriptors();
+        for (PropertyDescriptor pd : pds) {
+            String key = pd.getName();
+            if(EnumSerializer.ignoreList.contains(key)){
+                continue;
+            }
+            json.put(key,src.getPropertyValue(key));
+        }
+        return json;
+    }
+
 }

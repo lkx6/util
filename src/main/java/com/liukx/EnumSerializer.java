@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class EnumSerializer extends JsonSerializer<Enum> {
 
-    private static final List<String> ignoreList = Arrays.asList("class","declaringClass");
+    public static final List<String> ignoreList = Arrays.asList("class","declaringClass");
 
     @Override
     public void serialize(Enum anEnum, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
