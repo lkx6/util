@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -25,10 +26,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.servlet.http.HttpServletRequest;
 import java.beans.PropertyDescriptor;
-import java.io.File;
-import java.io.InputStream;
-import java.io.PrintWriter;
-import java.io.StringWriter;
+import java.io.*;
 import java.text.ParseException;
 import java.util.*;
 
@@ -320,6 +318,18 @@ public class AppUtil {
             json.put(key,src.getPropertyValue(key));
         }
         return json;
+    }
+
+    /**
+     * @description 通用的jpa通过id查询,不存在抛异常!
+     * @author liukx
+     * @date 2020/6/4 0004
+     */
+    public static <T> T jpaFindById(JpaRepository<T, Serializable> jpaRepository, String id, String entityName){
+        if(StringUtils.isEmpty(id)){
+            throw new ServiceException("id不能为空!");
+        }
+        return jpaRepository.findById(id).orElseThrow(()->new ServiceException(entityName+"不存在,id:"+id));
     }
 
 }
