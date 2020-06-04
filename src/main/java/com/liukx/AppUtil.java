@@ -325,7 +325,7 @@ public class AppUtil {
      * @author liukx
      * @date 2020/6/4 0004
      */
-    public static <T> T jpaFindById(JpaRepository<T, Serializable> jpaRepository, String id, String entityName){
+    public static <T> T jpaFindById(JpaRepository<T, String> jpaRepository, String id, String entityName){
         if(StringUtils.isEmpty(id)){
             throw new ServiceException("id不能为空!");
         }
