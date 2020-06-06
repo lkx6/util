@@ -175,6 +175,11 @@ public class AppUtil {
      * //todo 有这种时间格式可以直接解析的
      * like  Jackson2ObjectMapperBuilder b = new Jackson2ObjectMapperBuilder();
      *         b.indentOutput(true).dateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss,SSS X")).timeZone("GMT+8");
+     *   Map<ISO, String> formats = new EnumMap(ISO.class);
+     *         formats.put(ISO.DATE, "yyyy-MM-dd");
+     *         formats.put(ISO.TIME, "HH:mm:ss.SSSXXX");
+     *         formats.put(ISO.DATE_TIME, "yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+     *         ISO_PATTERNS = Collections.unmodifiableMap(formats);
      * @author liukx
      * @date 2018-07-31
      */
