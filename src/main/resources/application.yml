@@ -1,0 +1,8 @@
+spring:
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        #hibernate方言:核心源码1 org.hibernate.engine.jdbc.dialect.internal.DialectFactoryImpl.buildDialect
+        #                     2 org.hibernate.dialect.MySQLDialect.MySQLDialect
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
