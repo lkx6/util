@@ -326,6 +326,19 @@ public class AppUtil {
     }
 
     /**
+     * @description 枚举数组转换为json数组
+     * @author liukx
+     * @date 2020/6/3 0003
+     */
+    public static List<JSONObject> convertEnumsToJsonList(Enum... enumArray){
+        List<JSONObject> list = new ArrayList<>();
+        for (Enum anEnum : enumArray) {
+            list.add(convertEnumToJson(anEnum));
+        }
+        return list;
+    }
+
+    /**
      * @description 通用的jpa通过id查询,不存在抛异常!
      * @author liukx
      * @date 2020/6/4 0004
