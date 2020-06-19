@@ -1,4 +1,4 @@
-package com.liukx.service.impl;
+package com.tembin.common.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.liukx.AppUtil;
@@ -58,14 +58,27 @@ public class EnumServiceImpl implements EnumService, InitializingBean {
     @Override
     public void afterPropertiesSet() throws Exception {
         logger.info("加载枚举类...");
+
         Field field=ClassLoader.class.getDeclaredField("classes");
         field.setAccessible(true);
-        Vector<Class> classes=(Vector<Class>) field.get(ClassLoader.getSystemClassLoader());
+
+        ClassLoader classLoader = this.getClass().getClassLoader();
+        loadEnumFromClassLoader(classLoader,field);
+    }
+
+    private void loadEnumFromClassLoader(ClassLoader classLoader,Field field) throws Exception{
+        if(classLoader == null){
+            return;
+        }
+
+        Vector<Class> classes = (Vector)field.get(classLoader);
         for (Class aClass : classes) {
             if(aClass.getName().startsWith("com.tembin") && aClass.isEnum()){
                 enumMap.put(aClass.getName(),aClass);
                 enumMap.put(aClass.getSimpleName(),aClass);
             }
         }
+        loadEnumFromClassLoader(classLoader.getParent(),field);
     }
+
 }
