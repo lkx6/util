@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
+ * version 1
  * 在Application上 @EnableFeignClients(basePackages = {"com.tembin.loms.web.api"})
  * Created by liukx on 2020/6/22 0022.
  * value 必须定义,如果是自定义的链接调用,可以定义一个不存在的,就会使用url
