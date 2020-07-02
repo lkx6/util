@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import net.coobird.thumbnailator.Thumbnails;
 import net.coobird.thumbnailator.filters.Watermark;
 import net.coobird.thumbnailator.geometry.Position;
+import org.apache.commons.beanutils.BeanMap;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -312,6 +313,10 @@ public class AppUtil {
         }
 
         json.put("enumName",anEnum.name());
+
+//        org.apache.commons.beanutils.BeanMap
+//        BeanMap beanMap =  new BeanMap(anEnum);
+//        json.putAll(beanMap);
 
         BeanWrapper src = new BeanWrapperImpl(anEnum);
         PropertyDescriptor[] pds = src.getPropertyDescriptors();
